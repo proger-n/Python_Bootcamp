@@ -1,5 +1,5 @@
 # Day 01 - Python Bootcamp
-
+*`Topics:`* **argparse, sys, re (modules)**
 ## Exercise 00: Blockchain
 
 Only lines that fit into certain criteria are considered valid:
