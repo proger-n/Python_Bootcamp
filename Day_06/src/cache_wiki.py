@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import logging
 from time import sleep
 from random import random
+import argparse
 
 
 def crawl_web(start_url, depth):
@@ -49,10 +50,21 @@ def crawl_web(start_url, depth):
     return graph
 
 
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-p", "--text",
+                    help="flag input article")
+args = parser.parse_args()
+
+start_url = '/wiki/Six_degrees_of_separation'  # URL, с которого начинается обход
+
+if args.text:
+    start_url = args.text
+
+
 # Пример использования
 logging.basicConfig(level=logging.INFO)
 counter = 0
-start_url = '/wiki/Six_degrees_of_separation'  # URL, с которого начинается обход
 depth = 3  # Максимальный уровень обхода
 
 graph = crawl_web(start_url, depth)  # Получение направленного графа
