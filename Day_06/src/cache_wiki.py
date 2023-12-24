@@ -89,5 +89,5 @@ plt.show()
 # plt.savefig('graph.png')
 
 # nx.draw(graph, with_labels=True)
-plt.savefig('plotgraph.png', dpi=500, bbox_inches='tight')
+# plt.savefig('plotgraph.png', dpi=500, bbox_inches='tight')
 # plt.show()
