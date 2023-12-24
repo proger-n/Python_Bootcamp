@@ -54,18 +54,21 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("-p", "--text",
                     help="flag input article")
+parser.add_argument("-d", "--dep",
+                    help="flag input depth")
 args = parser.parse_args()
 
 start_url = '/wiki/Six_degrees_of_separation'  # URL, с которого начинается обход
+depth = 3  # Максимальный уровень обхода
 
 if args.text:
     start_url = args.text
-
+if args.dep:
+    depth = int(args.dep)
 
 # Пример использования
 logging.basicConfig(level=logging.INFO)
 counter = 0
-depth = 3  # Максимальный уровень обхода
 
 graph = crawl_web(start_url, depth)  # Получение направленного графа
 
