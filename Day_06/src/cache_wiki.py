@@ -1,93 +1,64 @@
 import requests
-from bs4 import BeautifulSoup
-import networkx as nx
 import json
-import matplotlib.pyplot as plt
+from bs4 import BeautifulSoup
 import logging
-from time import sleep
-from random import random
 import argparse
+logging.basicConfig(level=logging.INFO)
 
 
-def crawl_web(start_url, depth):
-    visited = set()  # Словарь для отслеживания посещенных страниц
-    graph = nx.DiGraph()  # Создание направленного графа
+def get_links(url):
+    global counter
+    response = requests.get("https://en.wikipedia.org/wiki/"+url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    links = []
+    see_also = soup.find(id='See_also')
+    if (see_also is not None):
+        if see_also.find_next("ul").find(class_="portalbox-entry"):
+            see_also = see_also.find_next("ul")
+        for link in see_also.find_next("ul").find_all("li"):
+            if counter > 200:
+                break
+            try:
+                href = link.a.get('href').split("/")[-1]
+                links.append(href)
+                logging.info(counter)
+                logging.info(href)
+                counter += 1
+            except AttributeError:
+                break
 
-    def crawl(name, url, level):
-        global counter
-        url_begin = 'https://en.wikipedia.org'
-        url = url_begin + url
-        # Проверка, посещали ли мы эту страницу и достигнут ли максимальный уровень
-        if url not in visited and level <= depth:
-            counter += 1
-            logging.info(counter)
-            logging.info(url)
-            visited.add(url)  # Добавляем текущий URL в список посещенных
+    return links
 
-            # Отправка HTTP-запроса и получение содержимого веб-страницы
-            response = requests.get(url)
-            soup = BeautifulSoup(response.text, 'html.parser')
 
-            see_also = soup.find(id='See_also')
-            if (see_also is not None):
-                see_also = see_also.find_next("ul").find_all("li")
-                # hrefs = []
-                for item in see_also:
-                    if counter > 100:
-                        break
-                    # hrefs.append(item.a.get("href"))
-                    try:
-                        graph.add_edge(
-                            name, item.a.get("href"))
-                        crawl(item.a.get("href"), item.a.get("href"), level + 1)
-                        # sleep(random())
-                    except AttributeError:
-                        break
+def build_graph(url, depth, graph):
+    global visited
+    if depth == 0:
+        return
 
-    # Запуск процесса обхода веба
-    crawl(start_url.split('/')[-1], start_url, 0)
-
-    return graph
+    if url not in visited:
+        visited.add(url)
+        links = get_links(url)
+        graph[url.split("/")[-1]] = links
+        for link in links:
+            build_graph(link, depth-1, graph)
 
 
 parser = argparse.ArgumentParser()
-
 parser.add_argument("-p", "--text",
                     help="flag input article")
 parser.add_argument("-d", "--dep",
                     help="flag input depth")
 args = parser.parse_args()
-
-start_url = '/wiki/Six_degrees_of_separation'  # URL, с которого начинается обход
-depth = 3  # Максимальный уровень обхода
-
+start_url = 'Six_degrees_of_separation'
+depth = 3
 if args.text:
     start_url = args.text
 if args.dep:
     depth = int(args.dep)
-
-# Пример использования
-logging.basicConfig(level=logging.INFO)
+graph = {}
 counter = 0
+visited = set()
+build_graph(start_url, depth, graph)
 
-graph = crawl_web(start_url, depth)  # Получение направленного графа
-
-# Сохранение графа в файл JSON
-data = nx.node_link_data(graph)
-with open('wiki.json', 'w') as f:
-    json.dump(data, f)
-
-# Строим граф с помощью matplotlib
-pos = nx.spring_layout(graph)
-nx.draw(graph, pos, with_labels=True)
-nx.draw_networkx_edges(graph, pos, edge_color='gray')
-
-# Отображаем граф
-plt.show()
-
-# Сохраняем граф в формате PNG
-# plt.savefig('graph.png')
-
-# nx.draw(graph, with_labels=True)
-# plt.savefig('plotgraph.png', dpi=500, bbox_inches='tight')
-# plt.show()
+with open('wiki.json', 'w') as outfile:
+    json.dump(graph, outfile, indent=4)
