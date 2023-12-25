@@ -16,7 +16,7 @@ def get_links(url):
         if see_also.find_next("ul").find(class_="portalbox-entry"):
             see_also = see_also.find_next("ul")
         for link in see_also.find_next("ul").find_all("li"):
-            if counter > 200:
+            if counter > 1000:
                 break
             try:
                 href = link.a.get('href').split("/")[-1]
@@ -44,7 +44,7 @@ def build_graph(url, depth, graph):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--text",
+parser.add_argument("-p", "--text", default='Erdős number',
                     help="flag input article")
 parser.add_argument("-d", "--dep",
                     help="flag input depth")
@@ -52,7 +52,7 @@ args = parser.parse_args()
 start_url = 'Six_degrees_of_separation'
 depth = 3
 if args.text:
-    start_url = args.text
+    start_url = args.text.replace(" ", "_")
 if args.dep:
     depth = int(args.dep)
 graph = {}
