@@ -20,9 +20,9 @@ def get_links(url):
                 break
             try:
                 href = link.a.get('href').split("/")[-1]
-                links.append(href)
+                links.append(href.lower())
                 logging.info(counter)
-                logging.info(href)
+                logging.info(href.lower())
                 counter += 1
             except AttributeError:
                 break
@@ -36,9 +36,9 @@ def build_graph(url, depth, graph):
         return
 
     if url not in visited:
-        visited.add(url)
+        visited.add(url.lower())
         links = get_links(url)
-        graph[url.split("/")[-1]] = links
+        graph[url.split("/")[-1].lower()] = links
         for link in links:
             build_graph(link, depth-1, graph)
 
@@ -49,7 +49,7 @@ parser.add_argument("-p", "--text", default='Erdős number',
 parser.add_argument("-d", "--dep",
                     help="flag input depth")
 args = parser.parse_args()
-start_url = 'Six_degrees_of_separation'
+
 depth = 3
 if args.text:
     start_url = args.text.replace(" ", "_")

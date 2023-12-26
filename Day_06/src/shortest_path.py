@@ -1,15 +1,27 @@
 import json
-
-
-with open('wiki.json', 'r') as file:
-    graph = json.load(file)
+import argparse
 
 path_len = []
 dep = 0
-start = 'Erdős_number'
-end = 'Graph_theory'
+start = 'Dog_training'.lower()
+end = 'Man_bites_dog'.lower()
 saw = set()
 # print(graph.keys())
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--from", dest='accumulate',
+                    help="flag input start article")
+parser.add_argument("--to", help="flag input end depth")
+
+args = parser.parse_args()
+
+if args.accumulate:
+    start = args.accumulate.replace(" ", "_").lower()
+if args.to:
+    end = args.to.replace(" ", "_").lower()
+
+with open('wiki.json', 'r') as file:
+    graph = json.load(file)
 
 
 def search(graph, start, end, dep):
