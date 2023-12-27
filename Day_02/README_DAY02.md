@@ -1,5 +1,8 @@
 # Day 02 - Python Bootcamp
 *`Topics:`* **Domain-Driven Design, Decorator**
+
+-----
+
 ## Exercise 00: Functional Purse
 
 You need to write functions `add_ingot(purse)`, `get_ingot(purse)` and `empty(purse)` that accept
@@ -19,6 +22,8 @@ should just return an empty one.
 Side note: we are only interested in gold ingots in this task, so it doesn't really matter what 
 happens with the rest of the stuff inside the purse. You can preserve it or throw away.
 
+-----
+
 ## Exercise 01: Splitwise
 
 You need to write a function named `split_booty`, which will receive any number of purses (dictionaries) as arguments. Purses in arguments can possibly contain various items, but our men of honor are only interested in gold ingots (named `gold_ingots` as in examples above). Number of ingots can be zero or positive integer.
@@ -26,6 +31,8 @@ You need to write a function named `split_booty`, which will receive any number 
 This function should return three purses (dictionaries) back so that in any two of three purses the difference between the number of ingots is no larger than 1. For example, if the booty includes `{"gold_ingots":3}`, `{"gold_ingots":2}` and `{"apples":10}`, then function should return `({"gold_ingots": 2}, {"gold_ingots": 2}, {"gold_ingots": 1})`.
 
 While implementing this function you still shouldn't use direct assignment to fields inside dictionaries. You can reuse functions you wrote in EX00 instead. 
+
+-----
 
 ## Exercise 02: Burglar Alarm
 

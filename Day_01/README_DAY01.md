@@ -1,5 +1,8 @@
 # Day 01 - Python Bootcamp
-*`Topics:`* **argparse, sys, re (modules)**
+*`Modules:`* **argparse, sys, re**
+
+-----
+
 ## Exercise 00: Blockchain
 
 Only lines that fit into certain criteria are considered valid:
@@ -33,6 +36,7 @@ Your code should accept the number of lines as an argument, like this:
 
 `~$ cat data.txt | python blockchain.py 10`
 
+-----
 
 ## Exercise 01: Decypher
 
@@ -42,6 +46,8 @@ Your script should be launchable like this:
 
 and print out the answer as a single word without spaces:  
 `Hydepark`
+
+-----
 
 ## Exercise 02: Track and Capture
 

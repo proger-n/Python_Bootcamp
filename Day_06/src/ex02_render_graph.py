@@ -2,9 +2,11 @@ import json
 import networkx as nx
 import matplotlib.pyplot as plt
 
+WIKI_FILE = 'wiki.json'
+
 
 def render_wiki_graph():
-    with open('wiki.json', 'r') as file:
+    with open(WIKI_FILE, 'r') as file:
         graph = json.load(file)
 
     G = nx.DiGraph()

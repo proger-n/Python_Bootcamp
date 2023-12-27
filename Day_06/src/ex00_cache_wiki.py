@@ -16,14 +16,17 @@ def get_links(url):
         if see_also.find_next("ul").find(class_="portalbox-entry"):
             see_also = see_also.find_next("ul")
         for link in see_also.find_next("ul").find_all("li"):
-            if counter > 1000:
-                break
             try:
                 href = link.a.get('href').split("/")[-1]
-                links.append(href.lower())
-                logging.info(counter)
-                logging.info(href.lower())
-                counter += 1
+                if href.find(":") == -1:
+                    links.append(href.lower())
+                    logging.info(counter)
+                    logging.info(href.lower())
+                    if counter > 1000:
+                        return links
+                    counter += 1
+                else:
+                    break
             except AttributeError:
                 break
 
@@ -33,6 +36,10 @@ def get_links(url):
 def build_graph(url, depth, graph):
     global visited
     if depth == 0:
+        if url not in visited:
+            visited.add(url.lower())
+            # links = get_links(url)
+            graph[url.split("/")[-1].lower()] = []
         return
 
     if url not in visited:
