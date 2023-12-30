@@ -1,4 +1,4 @@
-# Day 02 - Python Bootcamp
+# Day 06 - Python Bootcamp
 *`Topics:`* **Graph the shortest path algorithm, Web Parsing**  
 *`Modules:`* **BS4, Neo4J, networkx, matplotlib, json**
 
