@@ -1,5 +1,6 @@
 # Day 01 - Python Bootcamp
-*`Modules:`* **argparse, sys, re**
+*`Topics:`* **Parsing of arguments, regular expressions**   
+*`Modules:`* **argparse, sys, re** 
 
 -----
 

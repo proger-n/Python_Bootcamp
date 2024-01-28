@@ -1,6 +1,6 @@
 # Day 05 - Python Bootcamp
 *`Topics:`* **Iterable objects**  
-*`Modules:`* **map() zip() filter() functions, generator class, yield**
+*`Tools:`* **map() zip() filter() functions, generator class, yield**
 
 -----
 

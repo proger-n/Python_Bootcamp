@@ -1,5 +1,6 @@
 # Day 02 - Python Bootcamp
-*`Topics:`* **Domain-Driven Design, Decorator**
+*`Topics:`* **Domain-Driven Design, Decorator**  
+*`Modules:`* **Writing and using own module**  
 
 -----
 
